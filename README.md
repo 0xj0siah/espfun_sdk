@@ -5,12 +5,6 @@ TypeScript SDK for interacting with [ESP.FUN](https://esp.fun) fantasy esports s
 ## Installation
 
 ```bash
-npm install @espfun/sdk
-```
-
-Or from source:
-
-```bash
 git clone https://github.com/0xj0siah/espfun_sdk.git
 cd espfun_sdk
 npm install
