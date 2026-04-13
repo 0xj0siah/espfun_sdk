@@ -18,7 +18,7 @@ const BUY_TOKENS_TYPES = {
 /** EIP-712 type definitions for sell operations */
 const SELL_TOKENS_TYPES = {
   SellTokens: [
-    { name: 'seller', type: 'address' },
+    { name: 'from', type: 'address' },
     { name: 'playerTokenIds', type: 'uint256[]' },
     { name: 'amounts', type: 'uint256[]' },
     { name: 'minCurrencyToReceive', type: 'uint256' },
@@ -137,7 +137,7 @@ export class SignatureService {
   private async signSellLocally(params: SellSignatureParams): Promise<SignatureResult> {
     try {
       const domain = {
-        name: 'Player',
+        name: 'FDF Player',
         version: '1',
         chainId: this.chainId,
         verifyingContract: this.playerAddress,
@@ -146,7 +146,7 @@ export class SignatureService {
       const nonce = await this.apiClient.getSellNonce(this.wallet.address).catch(() => 0);
 
       const message = {
-        seller: this.wallet.address,
+        from: this.wallet.address,
         playerTokenIds: params.playerTokenIds.map(id => BigInt(id)),
         amounts: params.amounts,
         minCurrencyToReceive: params.minCurrencyToReceive,
