@@ -85,7 +85,7 @@ export class EspSDK {
     // Initialize modules
     this.trading = new TradingModule(
       this.contracts, this.wallet, signatureService, this.apiClient,
-      slippage, deadline, logger
+      this.authService, slippage, deadline, logger
     );
     this.pricing = new PricingModule(this.contracts, logger);
     this.staking = new StakingModule(this.contracts, this.wallet, logger);

@@ -3,6 +3,7 @@ import winston from 'winston';
 import { ContractFactory } from '../contracts/ContractFactory';
 import { BackendApiClient } from '../services/BackendApiClient';
 import { SignatureService } from '../services/SignatureService';
+import { AuthService } from '../services/AuthService';
 import { TransactionResult } from '../types/common';
 import { TradingPhase, LaunchInfo, LaunchProgress, TradeQuote } from '../types/trading';
 import { TradeOptions } from '../types/config';
@@ -22,6 +23,7 @@ export class TradingModule {
     private wallet: ethers.Wallet,
     private signatureService: SignatureService,
     private apiClient: BackendApiClient,
+    private authService: AuthService,
     private defaultSlippage: number,
     private defaultDeadline: number,
     private logger: winston.Logger
@@ -196,6 +198,9 @@ export class TradingModule {
     const maxSpend = currencyAmount + (currencyAmount * BigInt(Math.round(slippage * 100))) / 10000n;
     const deadline = BigInt(Math.floor(Date.now() / 1000) + deadlineSec);
 
+    // Ensure authenticated for backend signature
+    await this.authService.ensureAuthenticated();
+
     // Get buy quote to know expected tokens
     this.logger.debug('Getting buy quote...');
     const buyPrice = await this.contracts.getFDFPair().getBuyPrice([playerId], [0n], [currencyAmount]);
@@ -256,6 +261,9 @@ export class TradingModule {
 
     const amount = ethers.parseUnits(String(tokenAmount), TOKEN_DECIMALS);
     const deadline = BigInt(Math.floor(Date.now() / 1000) + deadlineSec);
+
+    // Ensure authenticated for backend signature
+    await this.authService.ensureAuthenticated();
 
     // Check token balance
     const balance = await this.contracts.getPlayer().balanceOf(this.wallet.address, playerId);
