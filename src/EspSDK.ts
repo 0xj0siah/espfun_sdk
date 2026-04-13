@@ -63,7 +63,7 @@ export class EspSDK {
     this.contracts = new ContractFactory(this.provider, this.wallet, addresses);
 
     this.apiClient = new BackendApiClient(
-      config.apiUrl ?? '',
+      config.apiUrl ?? networkConfig.apiUrl,
       logger,
       config.apiKey
     );

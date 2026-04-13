@@ -2,6 +2,7 @@ export interface NetworkConfig {
   chainId: number;
   name: string;
   rpcUrl: string;
+  apiUrl: string;
   blockExplorer: string;
   nativeCurrency: { name: string; symbol: string; decimals: number };
 }
@@ -11,6 +12,7 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     chainId: 84532,
     name: 'Base Sepolia',
     rpcUrl: 'https://sepolia.base.org',
+    apiUrl: 'https://api.esp.fun',
     blockExplorer: 'https://sepolia.basescan.org',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
   },
@@ -18,6 +20,7 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     chainId: 10143,
     name: 'Monad Testnet',
     rpcUrl: 'https://testnet-rpc.monad.xyz',
+    apiUrl: 'https://api.esp.fun',
     blockExplorer: 'https://testnet.monadexplorer.com',
     nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 },
   },
@@ -33,6 +36,7 @@ export function getNetworkConfig(network: string | { chainId: number; rpcUrl: st
     chainId: network.chainId,
     name: `Custom (${network.chainId})`,
     rpcUrl: network.rpcUrl,
+    apiUrl: 'https://api.esp.fun',
     blockExplorer: '',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
   };

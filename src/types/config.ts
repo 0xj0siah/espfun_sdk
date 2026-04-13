@@ -6,7 +6,7 @@ export interface SDKConfig {
   wallet: string | ethers.Wallet;
   /** Network: preset name or custom config */
   network?: 'base-sepolia' | 'monad-testnet' | { chainId: number; rpcUrl: string };
-  /** Backend API base URL (required for FDFPair trading, packs, promotions) */
+  /** Backend API base URL (defaults to https://api.esp.fun) */
   apiUrl?: string;
   /** Custom RPC URL override (takes precedence over network preset) */
   rpcUrl?: string;

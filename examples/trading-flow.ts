@@ -11,9 +11,10 @@
  *   7. Check final portfolio
  *
  * Usage:
- *   PRIVATE_KEY=0x... API_URL=https://... PLAYER_ID=1 npx ts-node examples/trading-flow.ts
+ *   PRIVATE_KEY=0x... PLAYER_ID=1 npx ts-node examples/trading-flow.ts
  *
- * Set DRY_RUN=false to skip actual transactions (default: true).
+ * API defaults to https://api.esp.fun. Override with API_URL env var.
+ * Set DRY_RUN=false to execute real transactions (default: true).
  */
 
 import { EspSDK } from '../src';
@@ -21,18 +22,13 @@ import { formatUsdc, formatTokens } from '../src/utils/decimals';
 
 async function main() {
   const privateKey = process.env.PRIVATE_KEY;
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.API_URL; // optional — defaults to https://api.esp.fun
   const playerId = parseInt(process.env.PLAYER_ID ?? '1', 10);
   const dryRun = process.env.DRY_RUN !== 'false';
 
   if (!privateKey) {
     console.error('Error: PRIVATE_KEY environment variable is required');
-    console.error('Usage: PRIVATE_KEY=0x... API_URL=https://... PLAYER_ID=1 npx ts-node examples/trading-flow.ts');
-    process.exit(1);
-  }
-
-  if (!apiUrl) {
-    console.error('Error: API_URL environment variable is required');
+    console.error('Usage: PRIVATE_KEY=0x... PLAYER_ID=1 npx ts-node examples/trading-flow.ts');
     process.exit(1);
   }
 
