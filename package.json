@@ -1,0 +1,29 @@
+{
+  "name": "@espfun/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for interacting with EspFun smart contracts — trading, staking, portfolio management, and event monitoring for agents and bots.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "clean": "rm -rf dist",
+    "prepublish": "npm run build"
+  },
+  "keywords": ["espfun", "esports", "fantasy", "sdk", "ethereum", "base-sepolia", "monad"],
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.16.0",
+    "axios": "^1.7.9",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
