@@ -1,10 +1,17 @@
 # @espfun/sdk
 
-TypeScript SDK for interacting with EspFun fantasy esports smart contracts on Base Sepolia (and future Monad). Enables automated trading, staking, portfolio management, and event monitoring for agents and bots.
+TypeScript SDK for interacting with [ESP.FUN](https://esp.fun) fantasy esports smart contracts on Base Sepolia. Enables automated trading, staking, portfolio management, and event monitoring for agents and bots.
 
 ## Installation
 
 ```bash
+npm install @espfun/sdk
+```
+
+Or from source:
+
+```bash
+git clone https://github.com/0xj0siah/espfun_sdk.git
 cd espfun_sdk
 npm install
 npm run build
@@ -18,7 +25,6 @@ import { EspSDK } from '@espfun/sdk';
 const sdk = new EspSDK({
   wallet: process.env.PRIVATE_KEY!,
   network: 'base-sepolia',
-  apiUrl: 'https://your-backend-url.com',
 });
 
 // Get a player's price
@@ -43,11 +49,12 @@ const sdk = new EspSDK({
 
   // Optional
   network: 'base-sepolia',             // 'base-sepolia' | 'monad-testnet' | { chainId, rpcUrl }
-  apiUrl: 'https://api.espfun.com',    // backend URL (required for FDFPair trades, packs, promotions)
+  apiUrl: 'https://api.esp.fun',       // defaults to https://api.esp.fun
   rpcUrl: 'https://sepolia.base.org',  // override network default RPC
   defaultSlippage: 0.5,                // percent (default: 0.5%)
   defaultDeadline: 300,                // seconds (default: 300 = 5 minutes)
   logLevel: 'info',                    // 'debug' | 'info' | 'warn' | 'error'
+  apiKey: 'your_api_key',              // API key auth (alternative to wallet signature)
   contracts: {                         // override specific contract addresses
     Player: '0x...',
     FDFPair: '0x...',
@@ -57,13 +64,11 @@ const sdk = new EspSDK({
 
 ### Environment Variables
 
-Copy `.env.example` to `.env`:
-
 ```
 PRIVATE_KEY=your_wallet_private_key_here
-RPC_URL=https://sepolia.base.org
-API_URL=https://your-backend-api-url.com
-LOG_LEVEL=info
+RPC_URL=https://sepolia.base.org       # optional — override default RPC
+API_URL=https://api.esp.fun            # optional — defaults to https://api.esp.fun
+LOG_LEVEL=info                         # optional
 ```
 
 ## Authentication
@@ -104,7 +109,7 @@ const sellTx = await sdk.trading.sell(playerId, 100);     // 100 tokens
 const tx = await sdk.trading.buy(playerId, 50, {
   slippage: 1.0,        // 1% slippage tolerance
   deadline: 600,         // 10 minute deadline
-  recipient: '0x...',    // send tokens to a different address
+  recipient: '0x...',    // send tokens to a different address (buy only)
 });
 
 // Check trading phase
@@ -307,26 +312,38 @@ parseTokens(1);                  // 1000000000000000000n  (18 decimals)
 formatTokens(1000000000000000000n); // "1.0"
 ```
 
-## Network Support
+## Network & API
 
-| Network | Chain ID | Status |
-|---------|----------|--------|
-| Base Sepolia | 84532 | Supported (contract addresses included) |
-| Monad Testnet | 10143 | Supported (provide contract addresses via `config.contracts`) |
+| Network | Chain ID | RPC | API |
+|---------|----------|-----|-----|
+| Base Sepolia | 84532 | `https://sepolia.base.org` | `https://api.esp.fun` |
+| Monad Testnet | 10143 | `https://testnet-rpc.monad.xyz` | `https://api.esp.fun` |
 
-## Smart Contracts
+The SDK defaults to `https://api.esp.fun` for all networks. Override with `apiUrl` in config.
 
-The SDK wraps 10 deployed contracts:
+## Smart Contracts (Base Sepolia)
 
-| Contract | Purpose |
-|----------|---------|
-| Player | ERC1155 player tokens |
-| FDFPair | AMM/DEX for post-graduation trading |
-| BondingCurve | Token launch via bonding curve |
-| ESPStaking | ESP token staking vault |
-| ESP | ESP ERC20 governance token |
-| TUSDC | Test USDC ERC20 token |
-| PlayerPack | Pack minting |
-| DevelopmentPlayers | Development roster management |
-| FeeManager | Trading fee configuration |
-| PlayerContracts | Player contract management |
+| Contract | Address | Purpose |
+|----------|---------|---------|
+| Player | `0xb316...5460` | ERC1155 player tokens |
+| FDFPair | `0xF41A...8d59` | AMM/DEX for post-graduation trading |
+| BondingCurve | `0x20b8...274F` | Token launch via bonding curve |
+| ESPStaking | `0x9c28...E845` | ESP token staking vault |
+| ESP | `0x11AD...6CE7` | ESP ERC20 governance token |
+| TUSDC | `0xEc25...08f8` | Test USDC ERC20 token |
+| PlayerPack | `0x6351...F24A` | Pack minting |
+| DevelopmentPlayers | `0xF57a...393c` | Development roster management |
+| FeeManager | `0x5a35...448f` | Trading fee configuration |
+| PlayerContracts | `0xB62d...9d2` | Player contract management |
+
+## Examples
+
+See [`examples/trading-flow.ts`](examples/trading-flow.ts) for a full end-to-end trading demonstration with DRY_RUN support.
+
+```bash
+PRIVATE_KEY=0x... PLAYER_ID=1 npx ts-node examples/trading-flow.ts
+```
+
+## License
+
+MIT
