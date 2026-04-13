@@ -253,7 +253,6 @@ export class TradingModule {
   private async sellOnFDFPair(playerId: number, tokenAmount: number, options?: TradeOptions): Promise<TransactionResult> {
     const slippage = options?.slippage ?? this.defaultSlippage;
     const deadlineSec = options?.deadline ?? this.defaultDeadline;
-    const recipient = options?.recipient ?? this.wallet.address;
 
     const amount = ethers.parseUnits(String(tokenAmount), TOKEN_DECIMALS);
     const deadline = BigInt(Math.floor(Date.now() / 1000) + deadlineSec);
@@ -298,7 +297,6 @@ export class TradingModule {
       [amount],
       minReceive,
       deadline,
-      recipient,
       sigResult.signature,
       BigInt(sigResult.nonce)
     );

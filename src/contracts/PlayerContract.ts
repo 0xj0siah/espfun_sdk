@@ -48,7 +48,6 @@ export class PlayerContract {
     amounts: bigint[],
     minCurrencyToReceive: bigint,
     deadline: bigint,
-    recipient: string,
     signature: string,
     nonce: bigint
   ): Promise<TransactionResult> {
@@ -57,7 +56,6 @@ export class PlayerContract {
       amounts,
       minCurrencyToReceive,
       deadline,
-      recipient,
       signature,
       nonce
     );
