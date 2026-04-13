@@ -143,7 +143,7 @@ export class SignatureService {
         verifyingContract: this.playerAddress,
       };
 
-      const nonce = await this.apiClient.getSellNonce(this.wallet.address).catch(() => 0);
+      const nonce = await this.apiClient.getSellNonce().catch(() => 0);
 
       const message = {
         from: this.wallet.address,

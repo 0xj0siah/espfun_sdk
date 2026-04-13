@@ -74,9 +74,9 @@ export class BackendApiClient {
     return data;
   }
 
-  async getSellNonce(address: string): Promise<number> {
-    const { data } = await this.client.get(`/api/sell-tokens/nonce/${address}`);
-    return data.nextNonce ?? data.nonce ?? 0;
+  async getSellNonce(): Promise<number> {
+    const { data } = await this.client.get('/api/sell-tokens/nonce');
+    return data.nonce ?? 0;
   }
 
   async confirmSellTransaction(transactionId: string, txHash: string): Promise<void> {
