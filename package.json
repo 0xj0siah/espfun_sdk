@@ -8,20 +8,32 @@
     "build": "tsc",
     "dev": "ts-node src/index.ts",
     "clean": "rm -rf dist",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "jest --verbose"
   },
-  "keywords": ["espfun", "esports", "fantasy", "sdk", "ethereum", "base-sepolia", "monad"],
+  "keywords": [
+    "espfun",
+    "esports",
+    "fantasy",
+    "sdk",
+    "ethereum",
+    "base-sepolia",
+    "monad"
+  ],
   "license": "MIT",
   "dependencies": {
-    "ethers": "^6.16.0",
     "axios": "^1.7.9",
+    "ethers": "^6.16.0",
     "winston": "^3.11.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "typescript": "^5.3.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.10.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
-    "@types/node": "^20.10.0"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
